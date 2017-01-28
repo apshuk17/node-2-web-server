@@ -1,6 +1,7 @@
 const express = require('express'),
 hbs = require('hbs'),
 app = express(),
+fs = require('fs');
 PORT = process.env.PORT || 3000;
 
 //Setting View engine
@@ -20,7 +21,9 @@ hbs.registerHelper('getCurrentYear', () => {
 
  //use of middleware
  app.use((req, res, next) => {
-   console.log(`Request method is: ${req.method} and request URL is: ${req.url}`);
+   let now = new Date().toString();
+   let log = `${now}: ${req.method} ${req.url}`;
+   fs.appendFile('server.log', log + `\n`);
    next();
  });
 
@@ -37,6 +40,13 @@ app.get('/about', (req, res) => {
   res.render('about.hbs', {
     pageTitle: 'About Us Page',
     message: 'Welcome to About Us Page.'
+  });
+});
+
+app.get('/projects', (req, res) => {
+  res.render('projects.hbs', {
+    pageTitle: 'Portfolio Page',
+    message: 'Welcome to Portfolio Page.'
   });
 });
 
