@@ -1,7 +1,7 @@
 const express = require('express'),
 hbs = require('hbs'),
 app = express(),
-PORT = 3030;
+PORT = process.env.PORT || 3000;
 
 //Setting View engine
 app.set('view engine', 'hbs');
